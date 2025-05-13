@@ -1,0 +1,91 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fondo general negro metalizado */
+body {
+  height: 100vh;
+  background: linear-gradient(145deg, #1c1c1c, #2a2a2a); /* negro metálico */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cuadro contenedor del formulario */
+.login-box {
+  background: linear-gradient(145deg, #2a4b6e, #1f3650); /* azul metalizado */
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1), 0 0 15px rgba(0, 0, 0, 0.6);
+  width: 350px;
+  color: #ffffff;
+}
+
+/* Título */
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Etiquetas */
+.login-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Campos de entrada */
+.login-box input[type="text"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #132a44;
+  color: #fff;
+  font-size: 16px;
+}
+
+.login-box input[type="text"]::placeholder,
+.login-box input[type="password"]::placeholder {
+  color: #aaa;
+}
+
+.login-box input[type="text"]:focus,
+.login-box input[type="password"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00bfff;
+}
+
+/* Botón */
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00bfff;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #0099cc;
+}
+
+/* Mensaje de error */
+.login-box .error {
+  color: #ff4d4d;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
