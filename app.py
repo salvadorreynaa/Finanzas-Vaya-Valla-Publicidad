@@ -54,5 +54,14 @@ class Movimiento(db.Model):
     monto = db.Column(db.Float)
     estado = db.Column(db.String(20))
 
+# Crear las tablas al inicio si no existen
+@app.before_first_request
+def create_tables():
+    try:
+        db.create_all()  # Esto crea las tablas si no existen
+        print("Tablas creadas correctamente!")
+    except Exception as e:
+        print(f"Error al crear tablas: {e}")
+
 if __name__ == '__main__':
     app.run(debug=True)
