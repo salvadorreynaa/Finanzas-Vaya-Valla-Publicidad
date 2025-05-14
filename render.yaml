@@ -7,3 +7,10 @@ services:
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: organizador-finanzas-db
+          property: connectionString
+
+databases:
+  - name: organizador-finanzas-db
