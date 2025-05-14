@@ -2,47 +2,28 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 
+# Inicialización de Flask
 app = Flask(__name__)
 
-# Usa la variable de entorno DATABASE_URL de Render
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# Configuración de la base de datos (Render define DATABASE_URL como variable de entorno)
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Inicializar SQLAlchemy
 db = SQLAlchemy(app)
 
-# Usuario y contraseña predefinidos (puedes cambiarlos)
+# Usuario y contraseña predefinidos
 USUARIO = 'vayavalla'
 CLAVE = 'palayenti2512'
 
-# Ruta de login
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        usuario = request.form['username']
-        clave = request.form['password']
-        if usuario == USUARIO and clave == CLAVE:
-            return redirect(url_for('index'))  # Redirige a /index si es correcto
-        else:
-            error = 'Usuario o contraseña incorrectos.'
-    return render_template('login.html', error=error)
+# -------------------------------
+# MODELOS
+# -------------------------------
 
-# Página principal protegida (index)
-@app.route('/index')
-def index():
-    return render_template('index.html')
-
-# Ruta para la página de movimientos
-@app.route('/movimientos')
-def movimientos():
-    return render_template('movimientos.html')
-
-# Ruta para la página de trabajos
-@app.route('/trabajos')
-def trabajos():
-    return render_template('trabajos.html')
-
-# Clase Movimiento (debe estar fuera de las funciones de ruta)
 class Movimiento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tipo = db.Column(db.String(20), nullable=False)
@@ -54,14 +35,16 @@ class Movimiento(db.Model):
     monto = db.Column(db.Float)
     estado = db.Column(db.String(20))
 
-# Crear las tablas al inicio si no existen
+# -------------------------------
+# FUNCIONES Y RUTAS
+# -------------------------------
+
 @app.before_first_request
 def create_tables():
     try:
-        db.create_all()  # Esto crea las tablas si no existen
-        print("Tablas creadas correctamente!")
+        db.create_all()
+        print("✅ Tablas creadas correctamente.")
     except Exception as e:
-        print(f"Error al crear tablas: {e}")
+        print(f"❌ Error al crear tablas: {e}")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#
